@@ -16,7 +16,7 @@ public class User {
     @Column(name = "user_id")
     private int uid;
 
-    @OneToMany(targetEntity = Post.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Post.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Post> postList = new ArrayList<>();
 
     public void addPost(Post post) { this.postList.add(post); }
