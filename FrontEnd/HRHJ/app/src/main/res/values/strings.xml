@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">HRHJ</string>
+
+    <string name="bottom_menu_home">HOME</string>
+    <string name="bottom_menu_search">SEARCH</string>
+    <string name="bottom_menu_add">ADD</string>
+    <string name="bottom_menu_calendar">CALENDAR</string>
+    <string name="bottom_menu_setting">SETTING</string>
+
+    <string name="popup_menu_take_pic">사진 촬영</string>
+    <string name="popup_menu_select_pic">기존 사진 선택</string>
+    <string name="popup_menu_basic_pic">기본 이미지 사용</string>
+
+    <string name="fragment_home_date">작성일</string>
+
+    <string name="fragment_search_text_box">검색</string>
+    <string name="fragment_search_no_result">검색 결과가 없습니다.</string>
+
+    <string name="fragment_add_actionbar_close">CLOSE</string>
+
 </resources>

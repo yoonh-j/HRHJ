@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeMenu"
+        android:icon="@drawable/bottom_navigation_home"
+        android:title="@string/bottom_menu_home"/>
+
+    <item
+        android:id="@+id/searchMenu"
+        android:icon="@drawable/bottom_navigation_search"
+        android:title="@string/bottom_menu_search"/>
+
+    <item
+        android:id="@+id/addMenu"
+        android:icon="@drawable/bottom_navigation_add"
+        android:title="@string/bottom_menu_add"/>
+
+    <item
+        android:id="@+id/calendarMenu"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="@string/bottom_menu_calendar"/>
+
+    <item
+        android:id="@+id/preferenceMenu"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/bottom_menu_setting"/>
+
+</menu>
