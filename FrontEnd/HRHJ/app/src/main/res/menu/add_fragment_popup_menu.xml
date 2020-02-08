@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/takePicMenu"
+        android:title="@string/popup_menu_take_pic" />
+    <item
+        android:id="@+id/selectPicMenu"
+        android:title="@string/popup_menu_select_pic"/>
+    <item
+        android:id="@+id/basicPicMenu"
+        android:title="@string/popup_menu_basic_pic"/>
+</menu>
