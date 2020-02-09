@@ -18,4 +18,11 @@
 
     <string name="fragment_add_actionbar_close">CLOSE</string>
 
+    <string name="fragment_calendar_sun">일</string>
+    <string name="fragment_calendar_mon">월</string>
+    <string name="fragment_calendar_tue">화</string>
+    <string name="fragment_calendar_wed">수</string>
+    <string name="fragment_calendar_thu">목</string>
+    <string name="fragment_calendar_fri">금</string>
+    <string name="fragment_calendar_sat">토</string>
 </resources>

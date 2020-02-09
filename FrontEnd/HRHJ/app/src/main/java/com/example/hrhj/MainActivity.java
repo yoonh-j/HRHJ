@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
                     break;
                 }
                 case R.id.calendarMenu: {
-                    //replaceFragment(calendarFragment);
+                    replaceFragment(calendarFragment);
                     break;
                 }
                 case R.id.preferenceMenu: {
