@@ -1,6 +1,9 @@
 package com.example.hrhj;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,12 +19,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +45,9 @@ public class CalendarFragment extends Fragment {
     private Context context;
     private int DAYS_COUNT = 42;
     private Calendar today;
+    private final HashSet<Date> events = new HashSet<>();
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월", Locale.KOREA);
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -67,10 +75,18 @@ public class CalendarFragment extends Fragment {
         calendarHeader = view.findViewById(R.id.calendarHeader);
         calendarGrid = view.findViewById(R.id.calendarGrid);
 
-        final HashSet<Date> events = new HashSet<>();
         events.add(new Date());
 
         setCalendar(events);
+
+        final TextView currentMonth = view.findViewById(R.id.currentMonth);
+
+        currentMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yearMonthDatePicker().show();
+            }
+        });
 
         ImageButton nextMonth = view.findViewById(R.id.nextMonth);
         nextMonth.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +108,59 @@ public class CalendarFragment extends Fragment {
 
     }
 
+    // 데이트피커에 연도와 월만 표시
+    private DatePickerDialog yearMonthDatePicker() {
+        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                today.set(Calendar.YEAR, year);
+                today.set(Calendar.MONTH, month);
+                currentMonth.setText(dateFormat.format(today.getTime()));
+                setCalendar(events);
+            }
+        };
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT, listener,
+                today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+
+        try {
+            Field[] datePickerDialogFields = datePickerDialog.getClass().getDeclaredFields();
+
+            for(Field dateField : datePickerDialogFields) {
+                if(dateField.getName().equals("mDatePicker")) {
+                    dateField.setAccessible(true);
+
+                    DatePicker datePicker = (DatePicker) dateField.get(datePickerDialog);
+
+                    Field datePickerFields[] = dateField.getType().getDeclaredFields();
+
+                    for(Field datePickerField : datePickerFields) {
+                        int daySpinnerId = Resources.getSystem().getIdentifier("day", "id", "android");
+                        if(daySpinnerId != 0) {
+                            View daySpinner = datePicker.findViewById(daySpinnerId);
+                            if(daySpinner != null) {
+                                daySpinner.setVisibility(View.GONE);
+                            }
+                        } else {
+                            if ("mDayPicker".equals(datePickerField.getName())
+                                    || "mDaySpinner".equals(datePickerField.getName())) {
+                                datePickerField.setAccessible(true);
+                                Object dayPicker = new Object();
+                                dayPicker = datePickerField.get(datePicker);
+                                ((View)dayPicker).setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        return datePickerDialog;
+    }
+
     private void setCalendar(HashSet<Date> events) {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = (Calendar)today.clone();
@@ -105,8 +174,6 @@ public class CalendarFragment extends Fragment {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         calendarGrid.setAdapter(new CalendarAdapter(context, cells, events, today));
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월", Locale.KOREA);
         currentMonth.setText(dateFormat.format(today.getTime()));
     }
 }
