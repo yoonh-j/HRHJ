@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,14 +41,16 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.uploadText.setText(mValues.get(position).uploadText);
         holder.uploadDate.setText(mValues.get(position).uploadDate);
 
+        //TODO: 텍스트 대신 레이아웃이 올라오게 변경
+
         // 이미지 클릭 시 텍스트 표시
         holder.uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.uploadText.getVisibility() == View.GONE) {
-                    holder.uploadText.setVisibility(View.VISIBLE);
+                if(holder.postLayout.getVisibility() == View.GONE) {
+                    holder.postLayout.setVisibility(View.VISIBLE);
                 } else {
-                    holder.uploadText.setVisibility(View.GONE);
+                    holder.postLayout.setVisibility(View.GONE);
                 }
             }
         });
@@ -59,6 +64,31 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 }
             }
         });
+
+        //업데이트 버튼
+        holder.updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.postLayout.setVisibility(View.GONE);
+                holder.updateLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // 포스트 수정
+
+        //포스트 변경 확인 버튼
+
+        holder.confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.updateLayout.setVisibility(View.GONE);
+                holder.postLayout.setVisibility(View.VISIBLE);
+
+                holder.uploadText.setText(holder.updateText.getText());
+
+            }
+        });
+
     }
 
     @Override
@@ -73,6 +103,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         private final TextView uploadDate;
         private ImageView uploadMood;
         private DummyItem mItem;
+        private FrameLayout postLayout;
+        private Button updateButton;
+        private FrameLayout updateLayout;
+        private Button confirmButton;
+        private EditText updateText;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -81,6 +117,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             uploadText = view.findViewById(R.id.uploadText);
             uploadDate = view.findViewById(R.id.uploadDate);
             uploadMood = view.findViewById(R.id.uploadMood);
+            postLayout = view.findViewById(R.id.postLayout);
+            updateButton = view.findViewById(R.id.postUpdateButton);
+            updateLayout = view.findViewById(R.id.postUpdateLayout);
+            confirmButton = view.findViewById(R.id.updateConfirmButton);
+            updateText = view.findViewById(R.id.updateText);
         }
 
         @Override
