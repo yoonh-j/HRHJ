@@ -1,5 +1,6 @@
 package com.example.hrhj;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -30,10 +32,19 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class AddFragment extends Fragment {
 
     private Context context;
+
+    private final Calendar today = Calendar.getInstance();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.", Locale.KOREA);
 
     public AddFragment() {
         // Required empty public constructor
@@ -71,15 +82,40 @@ public class AddFragment extends Fragment {
 
         final ViewGroup view = (ViewGroup)inflater.inflate(R.layout.fragment_add, container, false);
 
-        DatePicker datePicker = view.findViewById(R.id.datePicker);
-        datePicker.setVerticalScrollBarEnabled(false); // 스크롤바 안 보이게 설정
-        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+//        DatePicker datePicker = view.findViewById(R.id.datePicker);
+//        datePicker.setVerticalScrollBarEnabled(false); // 스크롤바 안 보이게 설정
+//        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+//            @Override
+//            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                monthOfYear += 1;
+//                Toast.makeText(context, year+"."+monthOfYear+"."+dayOfMonth+".", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        // 게시물 작성일 설정
+        final TextView addDate = view.findViewById(R.id.addDate);
+        addDate.setText(dateFormat.format(today.getTime()));
+
+        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                monthOfYear += 1;
-                Toast.makeText(context, year+"."+monthOfYear+"."+dayOfMonth+".", Toast.LENGTH_SHORT).show();
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                today.set(Calendar.YEAR, year);
+                today.set(Calendar.MONTH, month);
+                today.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                addDate.setText(dateFormat.format(today.getTime()));
+            }
+        };
+
+        addDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(context, listener,
+                        today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
             }
         });
+
+        // 추가 버튼 클릭 시 팝업 메뉴
         ImageButton addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,4 +151,5 @@ public class AddFragment extends Fragment {
         });
         return view;
     }
+
 }

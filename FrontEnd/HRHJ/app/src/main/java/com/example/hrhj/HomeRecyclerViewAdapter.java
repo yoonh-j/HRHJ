@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.example.hrhj.HomeFragment.OnListFragmentInteractionListener;
 import com.example.hrhj.dummy.DummyContent.DummyItem;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
@@ -28,7 +26,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_home, parent, false);
+                .inflate(R.layout.item_fragment_home, parent, false);
         return new ViewHolder(view);
     }
 
