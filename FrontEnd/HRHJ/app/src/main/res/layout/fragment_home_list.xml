@@ -9,4 +9,4 @@
     android:layout_above="@+id/bottomNavigation"
     app:layoutManager="LinearLayoutManager"
     tools:context=".HomeFragment"
-    tools:listitem="@layout/fragment_home" />
+    tools:listitem="@layout/item_fragment_home" />
