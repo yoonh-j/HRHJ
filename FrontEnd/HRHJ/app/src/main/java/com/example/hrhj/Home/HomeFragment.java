@@ -1,30 +1,25 @@
-package com.example.hrhj;
+package com.example.hrhj.Home;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.hrhj.MainActivity;
+import com.example.hrhj.R;
 import com.example.hrhj.dummy.DummyContent;
 import com.example.hrhj.dummy.DummyContent.DummyItem;
-
-import java.lang.reflect.Parameter;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 

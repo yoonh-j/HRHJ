@@ -1,30 +1,25 @@
-package com.example.hrhj;
+package com.example.hrhj.Calendar;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.hrhj.MainActivity;
+import com.example.hrhj.R;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -34,7 +29,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.zip.Inflater;
 
 
 public class CalendarFragment extends Fragment {

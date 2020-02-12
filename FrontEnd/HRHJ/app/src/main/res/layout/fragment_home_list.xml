@@ -8,5 +8,5 @@
     android:layout_height="match_parent"
     android:layout_above="@+id/bottomNavigation"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".HomeFragment"
+    tools:context=".Home.HomeFragment"
     tools:listitem="@layout/item_fragment_home" />

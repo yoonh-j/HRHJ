@@ -1,4 +1,4 @@
-package com.example.hrhj;
+package com.example.hrhj.Search;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,6 +21,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.hrhj.MainActivity;
+import com.example.hrhj.R;
+import com.example.hrhj.dummy.DummyContent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -59,6 +69,24 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.search_RecyclerView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
+
+        ArrayList<DummyContent.DummyItem> items = new ArrayList<>();
+
+        int numberOfTestData = 4;
+        for(int i = 0; i<numberOfTestData; i++ )
+        {
+            items.add(new DummyContent.DummyItem("1","1","1","1","1"));
+        }
+
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(new SearchAdapter(context,items));
+
+
+
         return view;
     }
 }

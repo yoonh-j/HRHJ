@@ -1,4 +1,4 @@
-package com.example.hrhj;
+package com.example.hrhj.Home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,7 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hrhj.HomeFragment.OnListFragmentInteractionListener;
+import com.example.hrhj.Home.HomeFragment.OnListFragmentInteractionListener;
+import com.example.hrhj.R;
 import com.example.hrhj.dummy.DummyContent.DummyItem;
 
 import java.util.List;
