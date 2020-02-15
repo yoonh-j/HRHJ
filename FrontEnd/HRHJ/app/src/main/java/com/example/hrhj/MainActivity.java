@@ -1,8 +1,6 @@
 package com.example.hrhj;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -10,10 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 
 import android.net.Uri;
 import android.os.Build;
@@ -21,13 +16,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.hrhj.Add.AddFragment;
 import com.example.hrhj.Calendar.CalendarFragment;
 import com.example.hrhj.Home.HomeFragment;
 import com.example.hrhj.Search.SearchFragment;
 import com.example.hrhj.dummy.DummyContent;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnListFragmentInteractionListener {

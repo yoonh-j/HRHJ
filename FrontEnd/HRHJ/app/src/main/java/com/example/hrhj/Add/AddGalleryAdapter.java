@@ -1,4 +1,4 @@
-package com.example.hrhj;
+package com.example.hrhj.Add;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.hrhj.R;
 
 import java.util.ArrayList;
 import java.util.List;

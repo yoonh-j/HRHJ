@@ -1,15 +1,10 @@
-package com.example.hrhj;
+package com.example.hrhj.Add;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraDevice;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,8 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.List;
+import com.example.hrhj.R;
 
 
 public class AddCameraFragment extends Fragment {
