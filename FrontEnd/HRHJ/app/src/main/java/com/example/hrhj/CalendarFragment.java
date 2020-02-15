@@ -56,10 +56,6 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 액션바 숨기기
-        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
-        actionBar.setShowHideAnimationEnabled(false);
-        actionBar.hide();
 
         today = new GregorianCalendar();
     }
@@ -67,9 +63,16 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // 액션바 숨기기
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setShowHideAnimationEnabled(false);
+            actionBar.hide();
+        }
+
         context = getContext();
 
-        final ViewGroup view = (ViewGroup) inflater .inflate(R.layout.fragment_calendar, container, false);
+        final ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_calendar, container, false);
 
         currentMonth = view.findViewById(R.id.currentMonth);
         calendarHeader = view.findViewById(R.id.calendarHeader);
