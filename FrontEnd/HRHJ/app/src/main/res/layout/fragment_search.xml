@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SearchFragment">
+    tools:context=".Search.SearchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,15 +26,10 @@
             android:imeOptions="actionSearch"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/fragment_search_no_result"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

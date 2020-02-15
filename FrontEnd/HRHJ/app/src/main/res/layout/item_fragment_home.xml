@@ -58,7 +58,7 @@
             <FrameLayout
                 android:id="@+id/home_frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/uploadImage"
@@ -66,14 +66,60 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/upload_image" />
 
-                <TextView
-                    android:id="@+id/uploadText"
+                <FrameLayout
+                    android:id="@+id/postLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:background="@color/colorTextBackground"
-                    android:textColor="@color/colorPrimary"
-                    android:visibility="gone" />
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/uploadText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:background="@color/colorTextBackground"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"/>
+
+                    <Button
+                        android:id="@+id/postUpdateButton"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom|right"
+                        android:padding="0dp" />
+
+                </FrameLayout>
+
+                //포스트 수정부분
+                <FrameLayout
+                    android:id="@+id/postUpdateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/updateText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="텍스트 작성"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:background="@color/colorTextBackground"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"/>
+
+                    <Button
+                        android:id="@+id/updateConfirmButton"
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom|center"
+                        android:padding="50dp"/>
+
+
+
+
+
+                </FrameLayout>
+
             </FrameLayout>
 
             <LinearLayout
