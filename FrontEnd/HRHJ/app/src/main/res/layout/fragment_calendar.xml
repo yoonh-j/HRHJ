@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Calendar.CalendarFragment">
 
@@ -11,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <ImageButton
             android:id="@+id/lastMonth"
@@ -48,6 +49,7 @@
         android:id="@+id/calendarHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
@@ -57,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_sun"
             android:textColor="@color/colorPrimaryDark" />
 
@@ -65,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_mon"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -73,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_tue"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -81,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_wed"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -89,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_thu"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -97,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_fri"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -105,7 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:text="@string/fragment_calendar_sat"
             android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>

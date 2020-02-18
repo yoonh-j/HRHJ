@@ -51,7 +51,7 @@ public class CalendarAdapter extends ArrayAdapter<Date> {
         }
 
         if((year == today.getYear() && month == today.getMonth() &&day == today.getDate())) {
-            calendarItemDay.setTextColor(view.getResources().getColor(R.color.colorAccent));
+            calendarItem.setBackgroundResource(R.drawable.item_fragment_calendar_background);
         }
 
         calendarItemDay.setText(String.valueOf(date.getDate()));

@@ -2,8 +2,13 @@ package com.example.hrhj;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
 
 import android.net.Uri;
 import android.os.Build;
@@ -11,6 +16,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.hrhj.Add.AddFragment;
 import com.example.hrhj.Calendar.CalendarFragment;
 import com.example.hrhj.Home.HomeFragment;
 import com.example.hrhj.Search.SearchFragment;
@@ -24,6 +30,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     private AddFragment addFragment = new AddFragment();
     private CalendarFragment calendarFragment = new CalendarFragment();
     private PreferenceFragment preferenceFragment = new PreferenceFragment();
+
+    public BottomNavigationView bottomNavigation;
+
+    final int REQUEST_PERMISSION_CAMERA = 0;
+    final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 1;
+    final int REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 2;
+    final int REQUEST_MULTIPLE_PERMISSIONS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +52,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
             }
         }
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.setItemIconTintList(null);
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frameLayout, homeFragment).commit();
+        transaction.add(R.id.frameLayout, homeFragment).addToBackStack(null).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
@@ -61,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
                     break;
                 }
                 case R.id.addMenu: {
-                    replaceFragment(addFragment);
+                    checkPermissions();
                     break;
                 }
                 case R.id.calendarMenu: {
@@ -73,14 +86,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
                     break;
                 }
             }
-            return false;
+            return true;
         }
     };
 
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.frameLayout, fragment).commit();
+        transaction.replace(R.id.frameLayout, fragment).addToBackStack(null).commit();
     }
 
     public interface OnFragmentInteractionListener {
@@ -90,5 +102,42 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    }
+
+    // TODO: 뒤로가기 버튼 누를 시 홈 화면으로
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        bottomNavigation.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void checkPermissions() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CAMERA);
+        } else {
+            bottomNavigation.setVisibility(View.GONE);
+            replaceFragment(addFragment);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(Build.VERSION.SDK_INT >= 23) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                replaceFragment(addFragment);
+
+                bottomNavigation.setVisibility(View.GONE);
+            }
+        }
     }
 }
