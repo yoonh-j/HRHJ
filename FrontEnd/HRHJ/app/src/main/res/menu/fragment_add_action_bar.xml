@@ -2,13 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/close"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:iconTint="@color/colorPrimaryDark"
-        android:title="@string/fragment_add_actionbar_close"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/addText"
         android:title="@string/fragment_add_actionbar_add_text"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/done"
+        android:title="완료"
         app:showAsAction="ifRoom"/>
 </menu>

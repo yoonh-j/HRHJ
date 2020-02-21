@@ -60,6 +60,7 @@ public class CalendarFragment extends Fragment {
         // 액션바 숨기기
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
             actionBar.setShowHideAnimationEnabled(false);
             actionBar.hide();
         }

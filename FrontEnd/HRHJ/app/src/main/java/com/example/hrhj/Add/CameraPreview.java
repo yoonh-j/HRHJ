@@ -38,10 +38,10 @@ public class CameraPreview implements SurfaceHolder.Callback {
     private int displayOrientation;
     private SurfaceHolder surfaceHolder;
     private FragmentActivity fragmentActivity;
-    private boolean isPreview = false;
     private Context context;
-
+    private boolean isPreview = false;
     public boolean isFlashOn = false;
+    public int width;
 
     public CameraPreview(Context context, FragmentActivity fragmentActivity, int cameraId, SurfaceView surfaceView) {
         this.context = context;
@@ -69,8 +69,9 @@ public class CameraPreview implements SurfaceHolder.Callback {
 
         param = camera.getParameters();
 
-        int width = fragmentActivity.getWindowManager().getDefaultDisplay().getWidth();
+        width = fragmentActivity.getWindowManager().getDefaultDisplay().getWidth();
 
+        // 사진 크기 = (화면 width) X (화면 width)
         List<Camera.Size> previewSizes = camera.getParameters().getSupportedPreviewSizes();
         Camera.Size previewSize = getPreviewSize(previewSizes, width, width);
 

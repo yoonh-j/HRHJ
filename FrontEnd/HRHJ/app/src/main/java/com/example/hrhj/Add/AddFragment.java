@@ -1,11 +1,15 @@
 package com.example.hrhj.Add;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -15,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hrhj.Home.HomeFragment;
 import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
 import com.google.android.material.tabs.TabLayout;
@@ -29,33 +34,21 @@ public class AddFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Context context;
+    public static Bitmap bitmap;
 
     private final Calendar today = Calendar.getInstance();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.", Locale.KOREA);
 
-    public static AddFragment newInstance() {
-        return new AddFragment();
+    public static AddFragment newInstance(Bitmap bm) {
+        AddFragment addFragment = new AddFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("Bitmap", bm);
+//        addFragment.setArguments(bundle);
+        return addFragment;
     }
 
     public AddFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()) {
-            case R.id.close:
-//                FragmentManager manager = getActivity().getSupportFragmentManager();
-//                manager.beginTransaction().remove(AddFragment.this).commit();
-//                manager.popBackStack();
-                ((MainActivity)context).onBackPressed();
-                ((MainActivity)context).bottomNavigation.setVisibility(View.VISIBLE);
-                return true;
-            case R.id.addText:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -74,8 +67,9 @@ public class AddFragment extends Fragment {
         // 액션바 보이기
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         if(actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
             actionBar.setShowHideAnimationEnabled(false);
-            actionBar.setTitle("새 게시물 추가");
             actionBar.show();
             setHasOptionsMenu(true);
         }

@@ -5,4 +5,12 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorGrayedOut">#A0A0A0</color>
     <color name="colorTextBackground">#B3000000</color>
+    <color name="colorActionBarMenu">#2196F3</color>
+
+    <color name="red">#DDFF0000</color>
+    <color name="orange">#FF5722</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="green">#4CAF50</color>
+    <color name="blue">#3F51B5</color>
+    <color name="purple">#9C27B0</color>
 </resources>
