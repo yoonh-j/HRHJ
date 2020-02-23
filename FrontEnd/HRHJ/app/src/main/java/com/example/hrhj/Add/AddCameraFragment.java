@@ -1,13 +1,20 @@
 package com.example.hrhj.Add;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -34,6 +41,26 @@ public class AddCameraFragment extends Fragment {
     public AddCameraFragment() {
         // Required empty public constructor
     }
+    @Override
+
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        menu.findItem(R.id.next).setVisible(true);
+        menu.findItem(R.id.done).setVisible(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        switch(item.getItemId()) {
+//            case android.R.id.home :
+//                getActivity().onBackPressed();
+//                return true;
+            case R.id.next:
+                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(BitmapFactory.decodeFile(cameraPreview.picPath))).addToBackStack(null).commit();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,17 +72,29 @@ public class AddCameraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         view = inflater.inflate(R.layout.fragment_add_camera, container, false);
         surfaceView = view.findViewById(R.id.surfaceView);
         initCameraPreview(CAMERA_FACING);
 
-        Button cameraButton = view.findViewById(R.id.cameraButton);
+        final Button cameraButton = view.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cameraPreview.takePicture();
+//                try {
+//                    //AddCameraFragment.this.wait(1000);
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(BitmapFactory.decodeFile(cameraPreview.picPath))).addToBackStack(null).commit();
+
             }
         });
+
 
         final ImageButton flashButton = view.findViewById(R.id.flashButton);
         flashButton.setOnClickListener(new View.OnClickListener() {

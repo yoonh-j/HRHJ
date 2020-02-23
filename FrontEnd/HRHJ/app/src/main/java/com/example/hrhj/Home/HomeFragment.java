@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
         // 액션바 보이기
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(false);
             actionBar.setShowHideAnimationEnabled(false);
             actionBar.show();
         }
