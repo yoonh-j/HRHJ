@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        bottomNavigation.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CAMERA);
         } else {
-            bottomNavigation.setVisibility(View.GONE);
+            //bottomNavigation.setVisibility(View.GONE);
             replaceFragment(addFragment);
         }
     }
@@ -136,8 +135,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 replaceFragment(addFragment);
 
-                bottomNavigation.setVisibility(View.GONE);
+                //bottomNavigation.setVisibility(View.GONE);
             }
+        }
+    }
+
+    public void setBottomNavigationVisibility(boolean visibility) {
+        if (visibility) {
+            bottomNavigation.setVisibility(View.VISIBLE);
+        } else {
+            bottomNavigation.setVisibility(View.GONE);
         }
     }
 }

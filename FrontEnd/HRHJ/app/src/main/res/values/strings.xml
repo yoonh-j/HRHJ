@@ -17,7 +17,8 @@
     <string name="fragment_search_no_result">검색 결과가 없습니다.</string>
 
     <string name="fragment_add_actionbar_close">CLOSE</string>
-    <string name="fragment_add_actionbar_add_text">다음</string>
+    <string name="fragment_add_actionbar_next">다음</string>
+    <string name="fragment_add_text_actionbar_done">완료</string>
 
     <string name="fragment_add_basic_pic">기본</string>
     <string name="fragment_add_take_pic">촬영</string>

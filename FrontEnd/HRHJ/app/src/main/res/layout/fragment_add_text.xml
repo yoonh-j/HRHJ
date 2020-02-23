@@ -5,28 +5,50 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/addDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:background="@color/colorPrimary" />
-
-    <EditText
-        android:id="@+id/add_editText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="start|top"
-        android:hint="일기 작성"
-        android:textColorHint="@color/colorGrayedOut"
-        android:background="@android:color/transparent"/>
+        android:layout_margin="10dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/addDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:background="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/addMood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/mood"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/addText_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/addText_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <EditText
+            android:id="@+id/addText_editText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorTextBackground"
+            android:gravity="start|top"
+            android:hint="일기 작성"
+            android:textColorHint="@color/colorGrayedOut"
+            android:visibility="gone"/>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,49 +131,49 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/white"
+            android:id="@+id/textColor_white"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary" />
 
         <Button
-            android:id="@+id/red"
+            android:id="@+id/textColor_red"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:backgroundTint="@color/red" />
 
         <Button
-            android:id="@+id/orange"
+            android:id="@+id/textColor_orange"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:backgroundTint="@color/orange" />
 
         <Button
-            android:id="@+id/yellow"
+            android:id="@+id/textColor_yellow"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:backgroundTint="@color/yellow" />
 
         <Button
-            android:id="@+id/green"
+            android:id="@+id/textColor_green"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:backgroundTint="@color/green" />
 
         <Button
-            android:id="@+id/blue"
+            android:id="@+id/textColor_blue"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:backgroundTint="@color/blue" />
 
         <Button
-            android:id="@+id/purple"
+            android:id="@+id/textColor_purple"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"

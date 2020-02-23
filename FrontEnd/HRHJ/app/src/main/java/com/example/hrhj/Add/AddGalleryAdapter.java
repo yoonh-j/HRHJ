@@ -88,7 +88,6 @@ public class AddGalleryAdapter extends BaseAdapter {
         Bitmap bm = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
         imageView.setImageBitmap(bm);
         imageView.setVisibility(ImageView.VISIBLE);
-        //imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT,
                 GridView.LayoutParams.MATCH_PARENT));
         imageView.setImageBitmap(bm);

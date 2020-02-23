@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context=".Add.AddBasicFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/addBasic_linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+        <RadioButton
+            android:id="@+id/basicColor_red"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:button="@drawable/radio_red"/>
+        <RadioButton
+            android:id="@+id/basicColor_orange"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:button="@drawable/radio_orange"/>
+        <RadioButton
+            android:id="@+id/basicColor_yellow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/radio_yellow"/>
+    </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/addBasic_linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+        <RadioButton
+            android:id="@+id/basicColor_green"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:button="@drawable/radio_green"/>
+        <RadioButton
+            android:id="@+id/basicColor_blue"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:button="@drawable/radio_blue"/>
+        <RadioButton
+            android:id="@+id/basicColor_purple"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/radio_purple"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/addBasic_linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp">
+        <RadioButton
+            android:id="@+id/basicColor_white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/border"
+            android:button="@drawable/radio_white"/>
+        <RadioButton
+            android:id="@+id/basicColor_gray"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="2dp"
+            android:button="@drawable/radio_gray"/>
+        <RadioButton
+            android:id="@+id/basicColor_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/radio_black"/>
+    </LinearLayout>
+</LinearLayout>

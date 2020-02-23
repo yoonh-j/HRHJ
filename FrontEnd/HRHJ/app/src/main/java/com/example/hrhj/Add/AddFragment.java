@@ -64,7 +64,8 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // 액션바 보이기
+        ((MainActivity)getContext()).setBottomNavigationVisibility(false);
+
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         if(actionBar != null) {
 //            actionBar.setDisplayHomeAsUpEnabled(true);
@@ -179,5 +180,6 @@ public class AddFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        ((MainActivity)getContext()).setBottomNavigationVisibility(true);
     }
 }
