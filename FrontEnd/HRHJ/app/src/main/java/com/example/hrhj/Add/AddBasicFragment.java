@@ -75,9 +75,6 @@ public class AddBasicFragment extends Fragment {
         int height = width / 3;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
 
-//        RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
-//        radioGroup.setLayoutParams(params);
-
         LinearLayout linearLayout1 = view.findViewById(R.id.addBasic_linearLayout1);
         linearLayout1.setLayoutParams(params);
         LinearLayout linearLayout2 = view.findViewById(R.id.addBasic_linearLayout2);
@@ -167,83 +164,6 @@ public class AddBasicFragment extends Fragment {
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.black);
             }
         });
-//        if(red.isChecked()) {
-//            radioGroup2.clearCheck();
-//            radioGroup3.clearCheck();
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red);
-//        }
-//        if(orange.isChecked()) {
-//            radioGroup2.clearCheck();
-//            radioGroup3.clearCheck();
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
-//        }
-//        if(green.isChecked()) {
-//            radioGroup1.clearCheck();
-//            radioGroup3.clearCheck();
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.green);
-//        }
-//        if(black.isChecked()) {
-//            radioGroup1.clearCheck();
-//            radioGroup2.clearCheck();
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.black);
-//        }
-
-
-//        final RadioButton red = view.findViewById(R.id.basicColor_red);
-//        if(red.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red);
-//        }
-//        orange.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked) {
-//                    bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
-//                }
-//            }
-//        });
-//        if(orange.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
-//        } else {
-//            orange.setChecked(false);
-//        }
-//        if(yellow.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.yellow);
-//        }
-//        if(green.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.green);
-//        }
-//        if(blue.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blue);
-//        }
-//        if(purple.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.purple);
-//        }
-//        if(white.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.white);
-//        }
-//        if(gray.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.gray);
-//        }
-//        if(black.isChecked()) {
-//            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.black);
-//        }
-
-//
-//        final View red = view.findViewById(R.id.basicColor_red);
-//        final View redSelected = view.findViewById(R.id.basicColorSelected_red);
-//        red.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(bitmap == null) {
-//
-//                }
-//                if(redSelected.getVisibility() == View.GONE) {
-//                    redSelected.setVisibility(View.VISIBLE);
-//                } else
-//                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red);
-//
-//            }
-//        });
 
         return view;
     }

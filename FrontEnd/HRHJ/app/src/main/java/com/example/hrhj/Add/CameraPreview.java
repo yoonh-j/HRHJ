@@ -37,6 +37,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
     private Camera.Parameters param;
     private int displayOrientation;
     private SurfaceHolder surfaceHolder;
+    public String picPath;
     private FragmentActivity fragmentActivity;
     private Context context;
     private boolean isPreview = false;
@@ -233,6 +234,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
 
                 String fileName = String.format(Locale.KOREA, "%d.jpg", System.currentTimeMillis());
                 File outputFile = new File(path, fileName);
+                picPath = outputFile.toString();
 
                 outputStream = new FileOutputStream(outputFile);
                 outputStream.write(bytes[0]);
@@ -257,6 +259,10 @@ public class CameraPreview implements SurfaceHolder.Callback {
             }
             return null;
         }
+    }
+
+    public String getPicPath() {
+        return picPath;
     }
 
     public void flashlight() {
