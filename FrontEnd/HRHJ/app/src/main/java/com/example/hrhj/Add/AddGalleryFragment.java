@@ -85,19 +85,16 @@ public class AddGalleryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add_gallery, container, false);
 
-        File dir = new File(Environment.getExternalStorageDirectory(), "Pictures");
-        picPath = dir.getPath();
+        int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, width);
 
         final ImageView imageView = view.findViewById(R.id.galleryPreview);
-//        imageView.getLayoutParams().width = ((MainActivity)context).getHeight();
-//        imageView.getLayoutParams().height = ((MainActivity)context).getHeight();
-//        imageView.requestLayout();
-
-        int height = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(height, height);
         imageView.setLayoutParams(params);
 
-        addGalleryAdapter = new AddGalleryAdapter(this.getContext(), picPath);
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/Camera");
+        picPath = dir.getPath();
+
+        addGalleryAdapter = new AddGalleryAdapter(this.getContext(), picPath, width);
         gridView = view.findViewById(R.id.gallery);
         gridView.setAdapter(addGalleryAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

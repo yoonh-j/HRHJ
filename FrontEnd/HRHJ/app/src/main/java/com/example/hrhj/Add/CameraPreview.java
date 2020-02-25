@@ -10,11 +10,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,17 +40,17 @@ public class CameraPreview implements SurfaceHolder.Callback {
     private int displayOrientation;
     private SurfaceHolder surfaceHolder;
     public String picPath;
+    public Bitmap bitmap;
+    private byte[] currentData;
     private FragmentActivity fragmentActivity;
     private Context context;
     private boolean isPreview = false;
     public boolean isFlashOn = false;
-    public int width;
 
     public CameraPreview(Context context, FragmentActivity fragmentActivity, int cameraId, SurfaceView surfaceView) {
         this.context = context;
         this.fragmentActivity = fragmentActivity;
         this.cameraId = cameraId;
-
         surfaceView.setVisibility(View.VISIBLE);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -69,32 +71,45 @@ public class CameraPreview implements SurfaceHolder.Callback {
         camera.setDisplayOrientation(orientation);
 
         param = camera.getParameters();
+//        if(param != null) {
+//            List<Camera.Size> pictureSizeList = param.getSupportedPictureSizes();
+//            for(Camera.Size size : pictureSizeList) {
+//                Log.d("##PictureSize##", "width: "+size.width+", height: "+size.height);
+//            }
+//            List<Camera.Size> previewSizeList = param.getSupportedPreviewSizes();
+//            for(Camera.Size size : previewSizeList) {
+//                Log.d("##PreviewSize##", "width: "+size.width+", height: "+size.height);
+//            }
+//        }
 
-        width = fragmentActivity.getWindowManager().getDefaultDisplay().getWidth();
+        int width = fragmentActivity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = width / 3 * 4;
 
-        // 사진 크기 = (화면 width) X (화면 width)
         List<Camera.Size> previewSizes = camera.getParameters().getSupportedPreviewSizes();
-        Camera.Size previewSize = getPreviewSize(previewSizes, width, width);
+        Camera.Size previewSize = getPreviewSize(previewSizes, width, height);
+        param.setPreviewSize(previewSize.width, previewSize.height);
+        //Log.d("##getPreviewSize##", "width: "+previewSize.width+", height: "+previewSize.height);
 
         List<Camera.Size> pictureSizes = camera.getParameters().getSupportedPictureSizes();
-        Camera.Size pictureSize = getPreviewSize(pictureSizes, width, width);
-
-        param.setPreviewSize(previewSize.width, previewSize.height);
+        Camera.Size pictureSize = getPreviewSize(pictureSizes, width, height);
         param.setPictureSize(pictureSize.width, pictureSize.height);
+        //Log.d("##getPictureSize##", "width: "+pictureSize.width+", height: "+pictureSize.height);
 
-        holder.setFixedSize(previewSize.width, previewSize.height);
+        holder.setFixedSize(width, height);
 
         List<String> focusModes = param.getSupportedFocusModes();
         if(focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
             param.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            camera.setParameters(param);
         }
+        camera.setParameters(param);
 
         try {
             camera.setPreviewDisplay(holder);
             camera.startPreview();
             isPreview = true;
-        } catch (IOException e) { }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -128,7 +143,8 @@ public class CameraPreview implements SurfaceHolder.Callback {
 
     public Camera.Size getPreviewSize(List<Camera.Size> sizes, int w, int h) {
         double ASPECT_TOLERANCE = 0.05;
-        double ratio = w / h;
+        double ratio = (double) h / w;
+
         if(sizes == null) { return null; }
         Camera.Size optimalSize = null;
         double diff = Double.MAX_VALUE;
@@ -136,6 +152,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
 
         for(Camera.Size size : sizes) {
             double r = (double) size.width / size.height;
+
             if(Math.abs(r - ratio) > ASPECT_TOLERANCE) continue;
             if(Math.abs(size.height - height) < diff) {
                 optimalSize = size;
@@ -145,6 +162,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
 
         if (optimalSize == null) {
             diff = Double.MAX_VALUE;
+
             for(Camera.Size size : sizes) {
                 if(Math.abs(size.height - height) < diff) {
                     optimalSize = size;
@@ -169,7 +187,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
                 degree = 180;
                 break;
             case Surface.ROTATION_270:
-                degree = 270;
+                degree = 360;
                 break;
         }
         int result;
@@ -205,7 +223,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
             // byte array to bitmap
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
             // image rotation
             Matrix matrix = new Matrix();
@@ -215,7 +233,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
             // bitmap to byte array
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] currentData = stream.toByteArray();
+            currentData = stream.toByteArray();
 
             new SaveImageTask().execute(currentData);
         }
@@ -227,7 +245,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
             FileOutputStream outputStream = null;
 
             try {
-                File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/하루한장");
+                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/하루한장");
                 if (!path.exists()) {
                     path.mkdirs();
                 }

@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
 
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayout, fragment).addToBackStack(null).commit();
+        transaction.replace(R.id.frameLayout, fragment).commit();
     }
 
     public interface OnFragmentInteractionListener {
@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
     }
 
-    // TODO: 뒤로가기 버튼 누를 시 홈 화면으로
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -123,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CAMERA);
         } else {
             //bottomNavigation.setVisibility(View.GONE);
-            replaceFragment(addFragment);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameLayout, addFragment).addToBackStack(null).commit();
         }
     }
 
@@ -133,9 +133,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
 
         if(Build.VERSION.SDK_INT >= 23) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                replaceFragment(addFragment);
-
-                //bottomNavigation.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, addFragment).addToBackStack(null).commit();
             }
         }
     }

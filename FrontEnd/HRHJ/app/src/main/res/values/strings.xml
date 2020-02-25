@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">HRHJ</string>
 
-    <string name="bottom_menu_home">HOME</string>
-    <string name="bottom_menu_search">SEARCH</string>
-    <string name="bottom_menu_add">ADD</string>
-    <string name="bottom_menu_calendar">CALENDAR</string>
-    <string name="bottom_menu_setting">SETTING</string>
+    <string name="bottom_menu_home">#홈</string>
+    <string name="bottom_menu_search">#검색</string>
+    <string name="bottom_menu_add">#추가</string>
+    <string name="bottom_menu_calendar">#캘린더</string>
+    <string name="bottom_menu_setting">#설정</string>
 
     <string name="popup_menu_take_pic">사진 촬영</string>
     <string name="popup_menu_select_pic">기존 사진 선택</string>
