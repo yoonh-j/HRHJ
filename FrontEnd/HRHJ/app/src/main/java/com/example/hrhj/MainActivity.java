@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 
 import android.net.Uri;
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     public ArrayList<Post> getPost() {
         return postList;
     }
-    
+
 
     public void getPostList() {
         new Thread() {
@@ -233,7 +234,21 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
             final byte[] responseBytes = response.body().bytes();
             ObjectMapper objectMapper = new ObjectMapper();
             postList = objectMapper.readValue(responseBytes,new TypeReference<List<Post>>(){});
-            replaceFragment(homeFragment);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run() {
+                            setBottomNavigationVisibility(true);
+                            bottomNavigation.setSelectedItemId(R.id.homeMenu);
+                        }
+                    });
+                }
+            }).start();
+
+
+            //replaceFragment(homeFragment);
 
         }
     };

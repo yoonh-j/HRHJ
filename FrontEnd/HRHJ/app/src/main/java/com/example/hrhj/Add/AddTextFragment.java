@@ -106,8 +106,6 @@ public class AddTextFragment extends Fragment {
                 setPost();
                 savePost(tmpPost);
 
-                ((MainActivity)getContext()).setBottomNavigationVisibility(true);
-                ((MainActivity)getContext()).bottomNavigation.setSelectedItemId(R.id.homeMenu);
 
                 return true;
         }
@@ -350,7 +348,7 @@ public class AddTextFragment extends Fragment {
 
     public void savePost(Post post)
     {
-        httpConn.savePost(post,savePostCallBakck);
+        httpConn.savePost(post,savePostCallBack);
     }
 
     public void saveImage()
@@ -370,7 +368,7 @@ public class AddTextFragment extends Fragment {
             tmpPost.setImage(fileName);
             inputFile = new File(Environment.getExternalStorageDirectory()+"/Pictures/", fileName);
             OutputStream out = new FileOutputStream(inputFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
 
         } catch (IOException ioe)
         {
@@ -395,7 +393,7 @@ public class AddTextFragment extends Fragment {
         }
     };
 
-    public final Callback savePostCallBakck = new Callback() {
+    public final Callback savePostCallBack = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
         }
@@ -407,6 +405,7 @@ public class AddTextFragment extends Fragment {
 
             ObjectMapper objectMapper = new ObjectMapper();
             Post post = objectMapper.readValue(responseBytes, Post.class);
+
 
             ((MainActivity)getContext()).updatePostList();
 

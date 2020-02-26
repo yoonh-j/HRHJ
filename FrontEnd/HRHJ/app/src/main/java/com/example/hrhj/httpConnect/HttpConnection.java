@@ -15,7 +15,7 @@ import okhttp3.RequestBody;
 
 public class HttpConnection {
 
-    public static final String url = "http://192.168.0.3:8080";
+    public static final String url = "http://112.168.28.71:8080";
     private OkHttpClient client;
     private static HttpConnection instance = new HttpConnection();
 
