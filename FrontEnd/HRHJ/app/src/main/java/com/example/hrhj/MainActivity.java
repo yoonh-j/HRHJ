@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     public ArrayList<Post> getPost() {
         return postList;
     }
+    
 
     public void getPostList() {
         new Thread() {

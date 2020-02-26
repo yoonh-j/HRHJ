@@ -96,11 +96,12 @@ public class AddTextFragment extends Fragment {
 //                onBackPressed();
 //                return true;
             case R.id.done:
+                /*
                 if(getArguments().getInt("FragmentNumber") == 3) {
                     savePicture();
                 }
-                transaction.replace(R.id.frameLayout, new HomeFragment()).commit();
-
+                //transaction.replace(R.id.frameLayout, new HomeFragment()).commit();
+                 */
                 saveImage();
                 setPost();
                 savePost(tmpPost);
@@ -390,8 +391,6 @@ public class AddTextFragment extends Fragment {
 
            // ObjectMapper objectMapper = new ObjectMapper();
           //  String filePath = objectMapper.readValue(responseBytes, String.class);
-
-            //TODO: POST의 Image String을 filePath로 변환 후 저장
 
         }
     };
