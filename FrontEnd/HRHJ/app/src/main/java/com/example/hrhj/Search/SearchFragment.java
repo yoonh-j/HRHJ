@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
-import com.example.hrhj.dummy.DummyContent;
+import com.example.hrhj.domain.Post.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,13 +73,8 @@ public class SearchFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.search_RecyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
 
-        ArrayList<DummyContent.DummyItem> items = new ArrayList<>();
+        ArrayList<Post> items = ((MainActivity)getActivity()).postList;
 
-        int numberOfTestData = 4;
-        for(int i = 0; i<numberOfTestData; i++ )
-        {
-            items.add(new DummyContent.DummyItem("1","1","1","1","1"));
-        }
 
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);

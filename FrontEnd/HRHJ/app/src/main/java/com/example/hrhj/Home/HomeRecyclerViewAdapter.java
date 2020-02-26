@@ -2,6 +2,7 @@ package com.example.hrhj.Home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,22 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.hrhj.Home.HomeFragment.OnListFragmentInteractionListener;
 import com.example.hrhj.R;
-import com.example.hrhj.dummy.DummyContent.DummyItem;
+import com.example.hrhj.domain.Post.Post;
+import com.example.hrhj.httpConnect.HttpConnection;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private  ArrayList<Post> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public HomeRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public HomeRecyclerViewAdapter(ArrayList<Post> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,10 +42,18 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.uploadImage.setImageResource(R.drawable.upload_image); // temp
+        //TODO: fileName -> 포스트 이미지
+        //String fileName = "img_2020_02_24_11_18_59.jpeg";
+        Glide.with(holder.mView.getContext())
+                .load(HttpConnection.url+"/image/"+mValues.get(position).getImage())
+                .error(R.drawable.upload_image)
+                .into(holder.uploadImage);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //holder.uploadImage.setImageResource(R.drawable.upload_image); // temp
         holder.uploadMood.setImageResource(R.drawable.upload_mood_happy); // temp
-        holder.uploadText.setText(mValues.get(position).uploadText);
-        holder.uploadDate.setText(mValues.get(position).uploadDate);
+        holder.uploadText.setText(mValues.get(position).getText());
+        holder.uploadDate.setText(sdf.format(mValues.get(position).getDate()));
 
         //TODO: 텍스트 대신 레이아웃이 올라오게 변경
 
@@ -103,7 +116,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         private TextView uploadText;
         private final TextView uploadDate;
         private ImageView uploadMood;
-        private DummyItem mItem;
+        private Post mItem;
         private FrameLayout postLayout;
         private Button updateButton;
         private FrameLayout updateLayout;

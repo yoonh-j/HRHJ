@@ -1,5 +1,7 @@
 package com.example.hrhj.domain;
 
+import com.example.hrhj.domain.Post.Post;
+
 import java.util.ArrayList;
 import java.util.List;
 

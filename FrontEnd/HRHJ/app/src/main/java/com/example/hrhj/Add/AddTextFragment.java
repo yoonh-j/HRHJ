@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,19 +28,37 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.hrhj.Home.HomeFragment;
 import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
+import com.example.hrhj.domain.Post.Color;
+import com.example.hrhj.domain.Post.Emotion;
+import com.example.hrhj.domain.Post.Post;
+import com.example.hrhj.httpConnect.HttpConnection;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class AddTextFragment extends Fragment {
+
 
     private AddGalleryAdapter addGalleryAdapter;
     private final Calendar today = Calendar.getInstance();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.", Locale.KOREA);
+    private  EditText editText;
     private AddBasicFragment.OnFragmentInteractionListener mListener;
     private Context context;
     private static String picPath;
+    private File inputFile;
+    private HttpConnection httpConn = HttpConnection.getInstance();
+    private Post tmpPost;
 
     public static AddTextFragment newInstance(Bitmap bm) {
         AddTextFragment addTextFragment = new AddTextFragment();
@@ -62,13 +80,15 @@ public class AddTextFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
         switch(item.getItemId()) {
 //            case android.R.id.home :
 //                onBackPressed();
 //                return true;
             case R.id.done:
-                transaction.replace(R.id.frameLayout, new HomeFragment()).commit();
+                saveImage();
+                setPost();
+                savePost(tmpPost);
                 ((MainActivity)getContext()).setBottomNavigationVisibility(true);
                 return true;
         }
@@ -89,6 +109,9 @@ public class AddTextFragment extends Fragment {
 
         context = getContext();
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_add_text, container, false);
+
+        tmpPost = new Post();
+        initPost();
 
         // 게시물 작성일 설정
         final TextView addDate = view.findViewById(R.id.addDate);
@@ -120,7 +143,7 @@ public class AddTextFragment extends Fragment {
         FrameLayout frameLayout = view.findViewById(R.id.addText_frameLayout);
         frameLayout.setLayoutParams(params);
 
-        final EditText editText = view.findViewById(R.id.addText_editText);
+        editText = view.findViewById(R.id.addText_editText);
 
         ImageView imageView = view.findViewById(R.id.addText_imageView);
         imageView.setImageBitmap((Bitmap) getArguments().getParcelable("Bitmap"));
@@ -143,7 +166,7 @@ public class AddTextFragment extends Fragment {
         happy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddTextFragment.this.context, "happy", Toast.LENGTH_SHORT).show();
+                tmpPost.setEmotion(Emotion.EMOTION_HAPPY);
                 addMood.setImageResource(R.drawable.happy);
             }
         });
@@ -151,7 +174,7 @@ public class AddTextFragment extends Fragment {
         good.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddTextFragment.this.context, "good", Toast.LENGTH_SHORT).show();
+                tmpPost.setEmotion(Emotion.EMOTION_GOOD);
                 addMood.setImageResource(R.drawable.good);
             }
         });
@@ -159,7 +182,7 @@ public class AddTextFragment extends Fragment {
         soso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddTextFragment.this.context, "soso", Toast.LENGTH_SHORT).show();
+                tmpPost.setEmotion(Emotion.EMOTION_SOSO);
                 addMood.setImageResource(R.drawable.soso);
             }
         });
@@ -167,7 +190,7 @@ public class AddTextFragment extends Fragment {
         sad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddTextFragment.this.context, "sad", Toast.LENGTH_SHORT).show();
+                tmpPost.setEmotion(Emotion.EMOTION_SAD);
                 addMood.setImageResource(R.drawable.sad);
             }
         });
@@ -175,7 +198,7 @@ public class AddTextFragment extends Fragment {
         bad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddTextFragment.this.context, "bad", Toast.LENGTH_SHORT).show();
+                tmpPost.setEmotion(Emotion.EMOTION_BAD);
                 addMood.setImageResource(R.drawable.bad);
             }
         });
@@ -185,6 +208,7 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tmpPost.setTextColor(Color.WHITE);
             }
         });
         Button red = view.findViewById(R.id.textColor_red);
@@ -192,6 +216,7 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.red));
+                tmpPost.setTextColor(Color.RED);
             }
         });
         Button orange = view.findViewById(R.id.textColor_orange);
@@ -199,6 +224,7 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.orange));
+                tmpPost.setTextColor(Color.ORANGE);
             }
         });
         Button yellow = view.findViewById(R.id.textColor_yellow);
@@ -206,6 +232,7 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.yellow));
+                tmpPost.setTextColor(Color.YELLOW);
             }
         });
         Button green = view.findViewById(R.id.textColor_green);
@@ -213,6 +240,7 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.green));
+                tmpPost.setTextColor(Color.GREEN);
             }
         });
         Button blue = view.findViewById(R.id.textColor_blue);
@@ -220,6 +248,7 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.blue));
+                tmpPost.setTextColor(Color.BLUE);
             }
         });
         Button purple = view.findViewById(R.id.textColor_purple);
@@ -227,9 +256,24 @@ public class AddTextFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.setTextColor(getResources().getColor(R.color.purple));
+                tmpPost.setTextColor(Color.PURPLE);
             }
         });
         return view;
+    }
+
+    public void initPost()
+    {
+        tmpPost.setUid(MainActivity.USER_ID);
+        tmpPost.setEmotion(Emotion.EMOTION_HAPPY);
+        tmpPost.setTextColor(Color.WHITE);
+    }
+
+    public void setPost()
+    {
+        tmpPost.setText(editText.getText().toString());
+        tmpPost.setDate(today.getTimeInMillis());
+
     }
 
     private void onBackPressed() {
@@ -242,4 +286,71 @@ public class AddTextFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void savePost(Post post)
+    {
+        httpConn.savePost(post,savePostCallBakck);
+    }
+
+    public void saveImage()
+    {
+        createImageFile((Bitmap)getArguments().getParcelable("Bitmap"));
+        httpConn.saveImage(inputFile,createImageFileCallBack);
+    }
+
+    public void createImageFile(Bitmap bitmap)
+    {
+        String fileName = null;
+
+        try{
+
+            String date = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss").format(System.currentTimeMillis());
+            fileName = "img_"+MainActivity.USER_ID+"_" + date + ".jpeg";
+            tmpPost.setImage(fileName);
+            inputFile = new File(Environment.getExternalStorageDirectory()+"/Pictures/", fileName);
+            OutputStream out = new FileOutputStream(inputFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+        } catch (IOException ioe)
+        {
+            ioe.printStackTrace();
+        }
+
+    }
+
+    public final Callback createImageFileCallBack = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+
+            //final byte[] responseBytes = response.body().bytes();
+
+           // ObjectMapper objectMapper = new ObjectMapper();
+          //  String filePath = objectMapper.readValue(responseBytes, String.class);
+
+            //TODO: POST의 Image String을 filePath로 변환 후 저장
+
+        }
+    };
+
+    public final Callback savePostCallBakck = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+
+            final byte[] responseBytes = response.body().bytes();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            Post post = objectMapper.readValue(responseBytes, Post.class);
+
+            ((MainActivity)getContext()).updatePostList();
+
+        }
+    };
 }

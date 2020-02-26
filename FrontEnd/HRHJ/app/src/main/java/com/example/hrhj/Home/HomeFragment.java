@@ -18,8 +18,20 @@ import android.widget.TextView;
 
 import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
-import com.example.hrhj.dummy.DummyContent;
-import com.example.hrhj.dummy.DummyContent.DummyItem;
+import com.example.hrhj.domain.Post.Post;
+import com.example.hrhj.domain.User;
+
+import com.example.hrhj.httpConnect.HttpConnection;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -27,6 +39,8 @@ public class HomeFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private HomeRecyclerViewAdapter adapter;
+
 
     public HomeFragment() {
     }
@@ -61,6 +75,9 @@ public class HomeFragment extends Fragment {
             actionBar.show();
         }
 
+
+
+
         View view = inflater.inflate(R.layout.fragment_home_list, container, false);
 
         ImageView uploadImage = view.findViewById(R.id.uploadImage);
@@ -78,7 +95,8 @@ public class HomeFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new HomeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            adapter = new HomeRecyclerViewAdapter(((MainActivity)getActivity()).postList, mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -103,6 +121,10 @@ public class HomeFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Post item);
     }
+
+
+
+
 }
