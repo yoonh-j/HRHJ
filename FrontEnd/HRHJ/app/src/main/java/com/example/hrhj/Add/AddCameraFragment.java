@@ -48,22 +48,8 @@ public class AddCameraFragment extends Fragment {
     @Override
 
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        menu.findItem(R.id.next).setVisible(true);
+        menu.findItem(R.id.next).setVisible(false);
         menu.findItem(R.id.done).setVisible(false);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        switch(item.getItemId()) {
-//            case android.R.id.home :
-//                getActivity().onBackPressed();
-//                return true;
-            case R.id.next:
-                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(cameraPreview.bitmap)).addToBackStack(null).commit();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -93,8 +79,6 @@ public class AddCameraFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cameraPreview.takePicture();
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(BitmapFactory.decodeFile(cameraPreview.getPicPath()))).addToBackStack(null).commit();
             }
         });
 

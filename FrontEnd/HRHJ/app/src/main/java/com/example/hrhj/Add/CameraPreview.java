@@ -1,10 +1,12 @@
 package com.example.hrhj.Add;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -22,6 +24,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.hrhj.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,7 +36,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class CameraPreview implements SurfaceHolder.Callback {
+public class CameraPreview implements SurfaceHolder.Callback{
 
     private Camera camera;
     private Camera.CameraInfo cameraInfo;
@@ -39,8 +44,6 @@ public class CameraPreview implements SurfaceHolder.Callback {
     private Camera.Parameters param;
     private int displayOrientation;
     private SurfaceHolder surfaceHolder;
-    public String picPath;
-    public Bitmap bitmap;
     private byte[] currentData;
     private FragmentActivity fragmentActivity;
     private Context context;
@@ -141,7 +144,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
         }
     }
 
-    public Camera.Size getPreviewSize(List<Camera.Size> sizes, int w, int h) {
+    private Camera.Size getPreviewSize(List<Camera.Size> sizes, int w, int h) {
         double ASPECT_TOLERANCE = 0.05;
         double ratio = (double) h / w;
 
@@ -173,7 +176,7 @@ public class CameraPreview implements SurfaceHolder.Callback {
         return optimalSize;
     }
 
-    public static int setPreviewOrientation(Camera.CameraInfo info, int rotation) {
+    private static int setPreviewOrientation(Camera.CameraInfo info, int rotation) {
         int degree = 0;
 
         switch(rotation) {
@@ -210,7 +213,6 @@ public class CameraPreview implements SurfaceHolder.Callback {
     Camera.PictureCallback rawCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-
         }
     };
     Camera.PictureCallback jpegCallback = new Camera.PictureCallback() {
@@ -223,64 +225,20 @@ public class CameraPreview implements SurfaceHolder.Callback {
             // byte array to bitmap
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
             // image rotation
             Matrix matrix = new Matrix();
             matrix.postRotate(orientation);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
 
-            // bitmap to byte array
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            currentData = stream.toByteArray();
-
-            new SaveImageTask().execute(currentData);
+            transaction(bitmap);
         }
     };
 
-    private class SaveImageTask extends AsyncTask<byte[], Void, Void> {
-        @Override
-        protected Void doInBackground(byte[]... bytes) {
-            FileOutputStream outputStream = null;
-
-            try {
-                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/하루한장");
-                if (!path.exists()) {
-                    path.mkdirs();
-                }
-
-                String fileName = String.format(Locale.KOREA, "%d.jpg", System.currentTimeMillis());
-                File outputFile = new File(path, fileName);
-                picPath = outputFile.toString();
-
-                outputStream = new FileOutputStream(outputFile);
-                outputStream.write(bytes[0]);
-                outputStream.flush();
-                outputStream.close();
-
-                camera.startPreview();
-
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                mediaScanIntent.setData(Uri.fromFile(outputFile));
-                context.sendBroadcast(mediaScanIntent);
-
-                try {
-                    camera.setPreviewDisplay(surfaceHolder);
-                    camera.startPreview();
-                } catch (Exception e) {
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
-    public String getPicPath() {
-        return picPath;
+    private void transaction(Bitmap bitmap) {
+        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.frameLayout, AddTextFragment.newInstance(bitmap, 3)).addToBackStack(null).commit();
     }
 
     public void flashlight() {
