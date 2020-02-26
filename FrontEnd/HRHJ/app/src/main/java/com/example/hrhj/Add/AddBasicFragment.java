@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.example.hrhj.R;
 
@@ -52,7 +53,11 @@ public class AddBasicFragment extends Fragment {
 //                getActivity().onBackPressed();
 //                return true;
             case R.id.next:
-                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(bitmap)).addToBackStack(null).commit();
+                if(bitmap == null) {
+                    Toast.makeText(getContext(), "사진을 선택하세요.", Toast.LENGTH_LONG).show();
+                } else {
+                    transaction.add(R.id.frameLayout, AddTextFragment.newInstance(bitmap, 2)).addToBackStack(null).commit();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

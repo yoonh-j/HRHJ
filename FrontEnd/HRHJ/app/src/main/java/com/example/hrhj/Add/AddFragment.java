@@ -106,74 +106,6 @@ public class AddFragment extends Fragment {
             }
         });
 
-//        DatePicker datePicker = view.findViewById(R.id.datePicker);
-//        datePicker.setVerticalScrollBarEnabled(false); // 스크롤바 안 보이게 설정
-//        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
-//            @Override
-//            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                monthOfYear += 1;
-//                Toast.makeText(context, year+"."+monthOfYear+"."+dayOfMonth+".", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-//        // 게시물 작성일 설정
-//        final TextView addDate = view.findViewById(R.id.addDate);
-//        addDate.setText(dateFormat.format(today.getTime()));
-//
-//        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                today.set(Calendar.YEAR, year);
-//                today.set(Calendar.MONTH, month);
-//                today.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                addDate.setText(dateFormat.format(today.getTime()));
-//            }
-//        };
-//
-//        addDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(context, listener,
-//                        today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
-//                datePickerDialog.show();
-//            }
-//        });
-
-//        // 추가 버튼 클릭 시 팝업 메뉴
-//        ImageButton addButton = view.findViewById(R.id.addButton);
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PopupMenu popupMenu = new PopupMenu(context, v);
-//                popupMenu.getMenuInflater().inflate(R.menu.add_fragment_popup_menu, popupMenu.getMenu());
-//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch(item.getItemId()) {
-//                            case R.id.takePicMenu:
-//                                // TODO: takePic()
-//                                break;
-//                            case R.id.selectPicMenu:
-//                                // TODO: selectPic()
-//                                break;
-//                            case R.id.basicPicMenu:
-//                                // TODO: basicPic()
-//                                break;
-//                        }
-//                        return true;
-//                    }
-//                });
-//                popupMenu.show();
-//                // 팝업메뉴
-//                PopupWindow popupWindow = new PopupWindow(context);
-//                popupWindow.setContentView(getLayoutInflater().inflate(R.layout.fragment_add_popup_menu, null));
-//                popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                popupWindow.setFocusable(true);
-//                popupWindow.showAsDropDown(v);
-//            }
-//        });
-
         return view;
     }
 
@@ -186,6 +118,8 @@ public class AddFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         ((MainActivity)getContext()).setBottomNavigationVisibility(true);
+        ((MainActivity)getContext()).replaceFragment(new HomeFragment());
+        ((MainActivity)getContext()).bottomNavigation.setSelectedItemId(R.id.homeMenu);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.hrhj.Add;
 
+import android.app.ActionBar;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
 
 
@@ -44,22 +48,8 @@ public class AddCameraFragment extends Fragment {
     @Override
 
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        menu.findItem(R.id.next).setVisible(true);
+        menu.findItem(R.id.next).setVisible(false);
         menu.findItem(R.id.done).setVisible(false);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        switch(item.getItemId()) {
-//            case android.R.id.home :
-//                getActivity().onBackPressed();
-//                return true;
-            case R.id.next:
-                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(BitmapFactory.decodeFile(cameraPreview.picPath))).addToBackStack(null).commit();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -75,6 +65,12 @@ public class AddCameraFragment extends Fragment {
         setHasOptionsMenu(true);
 
         view = inflater.inflate(R.layout.fragment_add_camera, container, false);
+
+        int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, width/3*4);
+        RelativeLayout relativeLayout = view.findViewById(R.id.addCamera_relativeLayout);
+        relativeLayout.setLayoutParams(params);
+
         surfaceView = view.findViewById(R.id.surfaceView);
         initCameraPreview(CAMERA_FACING);
 
@@ -83,15 +79,6 @@ public class AddCameraFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 cameraPreview.takePicture();
-//                try {
-//                    //AddCameraFragment.this.wait(1000);
-//                    Thread.sleep(5000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(BitmapFactory.decodeFile(cameraPreview.picPath))).addToBackStack(null).commit();
-
             }
         });
 

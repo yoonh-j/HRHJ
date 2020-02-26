@@ -17,6 +17,8 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,12 +34,14 @@ public class AddGalleryAdapter extends BaseAdapter {
     private String picPath;
     private String[] picList;
     private Bitmap bitmap;
+    private int width;
     private Context context;
     private DataSetObservable dataSetObservable = new DataSetObservable();
 
-    public AddGalleryAdapter(Context context, String picPath) {
+    public AddGalleryAdapter(Context context, String picPath, int width) {
         this.context = context;
         this.picPath = picPath;
+        this.width = width;
 
         File file = new File(picPath);
         picList = file.list();
@@ -69,14 +73,8 @@ public class AddGalleryAdapter extends BaseAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-//        if(view == null) {
-//            view = inflater.inflate(R.layout.item_fragment_add_gallery, parent, false);
-//        }
-//        ImageView imageView = view.findViewById(R.id.galleryItem);
-//
-//        PicInfo pic = picList.get(position);
-//        //imageView.setImageBitmap(ima);
         ImageView imageView;
+
         if (view == null) {
             imageView = new ImageView(context);
         } else {
@@ -85,18 +83,18 @@ public class AddGalleryAdapter extends BaseAdapter {
 
         bitmap = BitmapFactory.decodeFile(picPath + File.separator + picList[position]);
 
-        Bitmap bm = ThumbnailUtils.extractThumbnail(bitmap, 300, 300);
+        int w = width / 4;
+        Bitmap bm = ThumbnailUtils.extractThumbnail(bitmap, w, w);
         imageView.setImageBitmap(bm);
         imageView.setVisibility(ImageView.VISIBLE);
-        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT,
-                GridView.LayoutParams.MATCH_PARENT));
+        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
         imageView.setImageBitmap(bm);
 
         return imageView;
     }
 
     public Bitmap getBitmap(int position) {
-        Bitmap bm = BitmapFactory.decodeFile(picPath + File.separator + picList[position]);
+        Bitmap bm = BitmapFactory.decodeFile(getItemPath(position));
         return bm;
     }
 

@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
@@ -28,8 +29,6 @@ import java.io.File;
 
 public class AddGalleryFragment extends Fragment {
 
-    private static String picPath;
-    private GridView gridView;
     private AddGalleryAdapter addGalleryAdapter;
     private Bitmap bitmap;
     private Context context;
@@ -65,7 +64,11 @@ public class AddGalleryFragment extends Fragment {
 //                getActivity().onBackPressed();
 //                return true;
             case R.id.next:
-                transaction.add(R.id.frameLayout, AddTextFragment.newInstance(bitmap)).addToBackStack(null).commit();
+                if(bitmap == null) {
+                    Toast.makeText(getContext(), "사진을 선택하세요.", Toast.LENGTH_LONG).show();
+                } else {
+                    transaction.add(R.id.frameLayout, AddTextFragment.newInstance(bitmap, 1)).addToBackStack(null).commit();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -85,20 +88,16 @@ public class AddGalleryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add_gallery, container, false);
 
-        File dir = new File(Environment.getExternalStorageDirectory(), "Pictures");
-        picPath = dir.getPath();
+        int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, width);
 
         final ImageView imageView = view.findViewById(R.id.galleryPreview);
-//        imageView.getLayoutParams().width = ((MainActivity)context).getHeight();
-//        imageView.getLayoutParams().height = ((MainActivity)context).getHeight();
-//        imageView.requestLayout();
-
-        int height = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(height, height);
         imageView.setLayoutParams(params);
 
-        addGalleryAdapter = new AddGalleryAdapter(this.getContext(), picPath);
-        gridView = view.findViewById(R.id.gallery);
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/Camera");
+        String picPath = dir.getPath();
+        addGalleryAdapter = new AddGalleryAdapter(this.getContext(), picPath, width);
+        GridView gridView = view.findViewById(R.id.gallery);
         gridView.setAdapter(addGalleryAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
