@@ -71,9 +71,14 @@ public class AddFragment extends Fragment {
 //            actionBar.setDisplayHomeAsUpEnabled(true);
 //            actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
             actionBar.setShowHideAnimationEnabled(false);
+
+
             actionBar.show();
             setHasOptionsMenu(true);
         }
+
+
+
         context = getContext();
         final ViewGroup view = (ViewGroup)inflater.inflate(R.layout.fragment_add, container, false);
 
@@ -116,4 +121,5 @@ public class AddFragment extends Fragment {
         ((MainActivity)getContext()).replaceFragment(new HomeFragment());
         ((MainActivity)getContext()).bottomNavigation.setSelectedItemId(R.id.homeMenu);
     }
+
 }

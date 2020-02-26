@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -25,11 +29,29 @@ public class PostController {
     @PostMapping(path = "/savepost")
     public Post savePost(@RequestBody Post post) {
         User user = userService.getUserInfo(post.getUid());
-
         user.addPost(post);
         userService.saveUserInfo(user);
 
         return post;
+    }
+
+    @PostMapping(path = "/deletepost")
+    public void deletePost(@RequestBody Post post) {
+        postService.deletePost(post);
+    }
+
+    @PostMapping(path = "/saveimage")
+    public void saveImage(@RequestBody MultipartFile image) {
+
+        String imagePath = "c:/hrhj_image/"+image.getOriginalFilename();
+
+        //image파일을 서버에 저장
+        try{
+            image.transferTo(new File(imagePath));
+        }catch (IllegalStateException | IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.hrhj.domain;
+package com.example.hrhj.domain.Post;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Post {
+
 
     private int pid;
     private int uid;

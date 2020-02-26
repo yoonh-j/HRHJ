@@ -9,8 +9,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.hrhj.R;
-import com.example.hrhj.dummy.DummyContent;
+import com.example.hrhj.domain.Post.Post;
+import com.example.hrhj.httpConnect.HttpConnection;
+
 
 import java.util.ArrayList;
 
@@ -18,9 +21,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     private LayoutInflater layoutInflater;
     private Context context;
-    private ArrayList<DummyContent.DummyItem> itemList = new ArrayList<DummyContent.DummyItem>();
+    private ArrayList<Post> itemList = new ArrayList<Post>();
 
-    public SearchAdapter(Context context, ArrayList<DummyContent.DummyItem> itemList)
+    public SearchAdapter(Context context, ArrayList<Post> itemList)
     {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -40,8 +43,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
 
-        holder.itemImage.setImageResource(R.drawable.upload_image);
-
+        Glide.with(holder.itemView.getContext())
+                .load(HttpConnection.url+"/image/"+itemList.get(position).getImage())
+                .error(R.drawable.upload_image)
+                .into(holder.itemImage);
     }
 
     @Override
