@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +81,7 @@ public class CalendarFragment extends Fragment {
         setCalendar(events);
 
         final TextView currentMonth = view.findViewById(R.id.currentMonth);
-
+        currentMonth.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         currentMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

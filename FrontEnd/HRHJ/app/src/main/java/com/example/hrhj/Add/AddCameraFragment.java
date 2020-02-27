@@ -89,7 +89,7 @@ public class AddCameraFragment extends Fragment {
             public void onClick(View v) {
                 if(getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                     cameraPreview.flashlight();
-                    flashButton.setImageResource(cameraPreview.isFlashOn? android.R.drawable.ic_menu_compass : android.R.drawable.ic_menu_mylocation);
+                    flashButton.setImageResource(cameraPreview.isFlashOn? R.drawable.flash_selected : R.drawable.flash);
                 } else {
                     Toast.makeText(view.getContext(), "플래시를 지원하지 않는 기종입니다.", Toast.LENGTH_LONG).show();
                 }

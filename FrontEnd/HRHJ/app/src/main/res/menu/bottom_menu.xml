@@ -20,12 +20,12 @@
 
     <item
         android:id="@+id/calendarMenu"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/bottom_navigation_calendar"
         android:title="@string/bottom_menu_calendar"/>
 
     <item
         android:id="@+id/preferenceMenu"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@drawable/bottom_navigation_preference"
         android:title="@string/bottom_menu_setting"/>
 
 </menu>
