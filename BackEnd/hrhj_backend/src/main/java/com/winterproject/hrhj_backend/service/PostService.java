@@ -11,8 +11,4 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public void deletePost(Post post)
-    {
-        postRepository.deleteById(post.getPid());
-    }
 }

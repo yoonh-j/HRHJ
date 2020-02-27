@@ -15,7 +15,7 @@ import okhttp3.RequestBody;
 
 public class HttpConnection {
 
-    public static final String url = "http://112.168.28.71:8080";
+    public static final String url = "http://192.168.0.3:8080";
     private OkHttpClient client;
     private static HttpConnection instance = new HttpConnection();
 
@@ -47,6 +47,20 @@ public class HttpConnection {
 
         Request request = new Request.Builder()
                 .url(url+"/savepost")
+                .post(RequestBody.create(MediaType.parse("application/json"),json))
+                .build();
+
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public void deletePost(Post post, Callback callback) {
+
+        Gson gson = new Gson();
+        String json = gson.toJson(post);
+
+        Request request = new Request.Builder()
+                .url(url+"/deletepost")
                 .post(RequestBody.create(MediaType.parse("application/json"),json))
                 .build();
 

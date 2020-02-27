@@ -37,7 +37,16 @@ public class PostController {
 
     @PostMapping(path = "/deletepost")
     public void deletePost(@RequestBody Post post) {
-        postService.deletePost(post);
+        User user = userService.getUserInfo(post.getUid());
+        File image = new File("c:/hrhj_image/"+post.getImage());
+        user.deletePost(post);
+        userService.saveUserInfo(user);
+
+        if(image.exists())
+        {
+            image.delete();
+        }
+
     }
 
     @PostMapping(path = "/saveimage")

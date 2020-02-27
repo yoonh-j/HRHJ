@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,10 +18,17 @@ import com.example.hrhj.Home.HomeFragment.OnListFragmentInteractionListener;
 import com.example.hrhj.R;
 import com.example.hrhj.domain.Post.Post;
 import com.example.hrhj.httpConnect.HttpConnection;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
 
@@ -42,8 +50,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        //TODO: fileName -> 포스트 이미지
-        //String fileName = "img_2020_02_24_11_18_59.jpeg";
         Glide.with(holder.mView.getContext())
                 .load(HttpConnection.url+"/image/"+mValues.get(position).getImage())
                 .error(R.drawable.upload_image)
@@ -55,7 +61,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.uploadText.setText(mValues.get(position).getText());
         holder.uploadDate.setText(sdf.format(mValues.get(position).getDate()));
 
-        //TODO: 텍스트 대신 레이아웃이 올라오게 변경
+
+
 
         // 이미지 클릭 시 텍스트 표시
         holder.uploadImage.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +110,17 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             }
         });
 
+        //포스트 삭제
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HttpConnection httpConn = HttpConnection.getInstance();
+                httpConn.deletePost(holder.mItem,deletePostListCallback);
+                mValues.remove(holder.mItem);
+                notifyDataSetChanged();
+            }
+        });
+
     }
 
     @Override
@@ -122,6 +140,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         private FrameLayout updateLayout;
         private Button confirmButton;
         private EditText updateText;
+        private ImageButton deleteButton;
 
 
         public ViewHolder(View view) {
@@ -136,6 +155,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             updateLayout = view.findViewById(R.id.postUpdateLayout);
             confirmButton = view.findViewById(R.id.updateConfirmButton);
             updateText = view.findViewById(R.id.updateText);
+            deleteButton = view.findViewById(R.id.deleteButton);
         }
 
         @Override
@@ -143,4 +163,15 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             return super.toString() + " '" + uploadText.getText() + "'";
         }
     }
+
+    public final Callback deletePostListCallback = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+        }
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+
+        }
+    };
+
 }
