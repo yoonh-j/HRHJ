@@ -49,6 +49,10 @@ public class DeviceCodeService {
             deviceCodeRepository.deleteById(newDevice.getCid());
             return newDevice.getUid();
         }
+    }
 
+    public DeviceCode getDeviceCodeInfo(int cid)
+    {
+        return deviceCodeRepository.findById(cid).orElse(new DeviceCode());
     }
 }

@@ -20,11 +20,13 @@ public class DeviceCodeController {
     public DeviceCodeController(DeviceCodeService deviceCodeService){ this.deviceCodeService = deviceCodeService;}
 
     @PostMapping(path = "/createdevicecode")
-    public void savePost(@RequestBody int uid) {
+    public DeviceCode savePost(@RequestBody int uid) {
         DeviceCode deviceCode = new DeviceCode();
         deviceCode.setUid(uid);
         deviceCode.setCode(deviceCodeService.createCode());
         deviceCodeService.saveDeviceCode(deviceCode);
+
+        return deviceCodeService.getDeviceCodeInfo(deviceCode.getCid());
     }
 
     @PostMapping(path = "/changedevice")

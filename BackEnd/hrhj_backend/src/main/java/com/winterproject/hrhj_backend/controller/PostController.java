@@ -57,7 +57,7 @@ public class PostController {
         Post originPost = postService.getPostInfo(post.getPid());
 
         user.updatePost(originPost,post.getText());
-        
+
         userService.saveUserInfo(user);
 
 

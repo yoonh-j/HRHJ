@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.net.Uri;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     private HttpConnection httpConn = HttpConnection.getInstance();
     public ArrayList<Post> postList = new ArrayList<>();
 
+
+
     public BottomNavigationView bottomNavigation;
 
     final int REQUEST_PERMISSION_CAMERA = 0;
@@ -57,12 +60,15 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     final int REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 2;
     final int REQUEST_MULTIPLE_PERMISSIONS = 3;
 
-    public static int USER_ID = 1;
+    public static int USER_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData",MODE_PRIVATE);
+        USER_ID = sharedPreferences.getInt("USER_ID",0);
 
         //권한 획득
         TedPermission.with(this)

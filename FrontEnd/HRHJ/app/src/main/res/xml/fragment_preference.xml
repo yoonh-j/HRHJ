@@ -11,7 +11,7 @@
         android:key="help"
         android:icon="@android:drawable/ic_menu_help"/>
     <Preference
-        android:title="기기변경"
+        android:title="기기공유"
         android:key="deviceChange"
         android:icon="@android:drawable/ic_menu_info_details"/>
 
