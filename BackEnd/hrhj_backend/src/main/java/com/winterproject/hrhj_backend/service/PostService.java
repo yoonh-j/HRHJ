@@ -5,6 +5,8 @@ import com.winterproject.hrhj_backend.domain.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostService {
 
@@ -15,5 +17,8 @@ public class PostService {
         return postRepository.findById(pid).orElse(new Post());
     }
 
+    public List<Post> searchPost(int uid, String text) {
+        return postRepository.findAllByUidAndTextContaining(uid,text);
+    }
 
 }

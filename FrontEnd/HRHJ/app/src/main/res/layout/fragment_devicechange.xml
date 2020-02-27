@@ -24,7 +24,7 @@
         android:padding="30dp">
 
         <Button
-            android:id="@+id/DCF_deviceChange_Button"
+            android:id="@+id/DCF_shareAccount_Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="계정공유" />

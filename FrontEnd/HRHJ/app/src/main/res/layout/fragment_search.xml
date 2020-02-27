@@ -25,6 +25,7 @@
             android:hint="@string/fragment_search_text_box"
             android:inputType="text"
             android:imeOptions="actionSearch"/>
+        <requestFocus/>
     </LinearLayout>
 
 

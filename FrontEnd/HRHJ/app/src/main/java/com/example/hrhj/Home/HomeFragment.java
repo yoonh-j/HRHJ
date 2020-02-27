@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,12 @@ import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private HomeRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
+
 
 
     public HomeFragment() {
@@ -47,10 +49,10 @@ public class HomeFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static HomeFragment newInstance(int columnCount) {
+    public static HomeFragment newInstance(int index) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt("INDEX", index);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,9 +61,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -89,15 +88,30 @@ public class HomeFragment extends Fragment {
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            adapter = new HomeRecyclerViewAdapter(((MainActivity)getActivity()).postList, mListener);
+            adapter = new HomeRecyclerViewAdapter(((MainActivity)getActivity()).postList, mListener,context);
             recyclerView.setAdapter(adapter);
+
+
+            if (getArguments() != null) {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.scrollToPosition(getArguments().getInt("INDEX"));
+                    }
+                }, 200);
+
+
+            }
+
         }
+
         return view;
     }
 
@@ -124,6 +138,10 @@ public class HomeFragment extends Fragment {
         void onListFragmentInteraction(Post item);
     }
 
+    public void scrollTo(int position)
+    {
+        recyclerView.scrollToPosition(position);
+    }
 
 
 

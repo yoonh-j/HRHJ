@@ -197,6 +197,15 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         return postList;
     }
 
+    public void scrollToItem(Post post){
+        int index = postList.indexOf(post);
+        homeFragment.scrollTo(index);
+        //bottomNavigation.setSelectedItemId(R.id.homeMenu);
+        replaceFragment(HomeFragment.newInstance(index));
+        //TODO: OnItemSelectedListener때문에 네비바 변경 불가능
+
+    }
+
 
     public void getPostList() {
         new Thread() {
@@ -225,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
             ObjectMapper objectMapper = new ObjectMapper();
             postList = objectMapper.readValue(responseBytes,new TypeReference<List<Post>>(){});
             transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.frameLayout, homeFragment).addToBackStack(null).commit();
+            transaction.replace(R.id.frameLayout, homeFragment).addToBackStack(null).commit();
 
         }
     };

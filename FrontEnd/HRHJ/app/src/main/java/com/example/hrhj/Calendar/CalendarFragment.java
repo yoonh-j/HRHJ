@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
+import com.example.hrhj.domain.Post.Post;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,7 @@ public class CalendarFragment extends Fragment {
     private int DAYS_COUNT = 42;
     private Calendar today;
     private final HashSet<Date> events = new HashSet<>();
+    private ArrayList<Post> postList = new ArrayList<>();
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월", Locale.KOREA);
 
@@ -72,6 +74,7 @@ public class CalendarFragment extends Fragment {
         currentMonth = view.findViewById(R.id.currentMonth);
         calendarHeader = view.findViewById(R.id.calendarHeader);
         calendarGrid = view.findViewById(R.id.calendarGrid);
+        postList = ((MainActivity)getActivity()).postList;
 
         events.add(new Date());
 
@@ -171,7 +174,8 @@ public class CalendarFragment extends Fragment {
             cells.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        calendarGrid.setAdapter(new CalendarAdapter(context, cells, events, today));
+
+        calendarGrid.setAdapter(new CalendarAdapter(context, cells, events, today,postList));
         currentMonth.setText(dateFormat.format(today.getTime()));
     }
 }

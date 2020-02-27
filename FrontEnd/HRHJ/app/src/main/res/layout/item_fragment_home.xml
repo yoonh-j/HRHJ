@@ -114,10 +114,6 @@
                         android:layout_gravity="bottom|center"
                         android:padding="50dp"/>
 
-
-
-
-
                 </FrameLayout>
 
             </FrameLayout>
