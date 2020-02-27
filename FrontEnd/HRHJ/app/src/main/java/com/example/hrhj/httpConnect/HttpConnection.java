@@ -26,6 +26,19 @@ public class HttpConnection {
 
     private HttpConnection() { this.client = new OkHttpClient(); }
 
+    public void createUser(User user, Callback callback){
+
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+
+        Request request = new Request.Builder()
+                .url(url+"/register")
+                .post(RequestBody.create(MediaType.parse("application/json"),json))
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
     public void getPostList(int uid, Callback callback){
 
         Gson gson = new Gson();

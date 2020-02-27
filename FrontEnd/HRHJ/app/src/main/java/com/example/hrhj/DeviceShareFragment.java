@@ -2,6 +2,7 @@ package com.example.hrhj;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -152,7 +153,12 @@ public class DeviceShareFragment extends Fragment {
             {
                 //기기변경 성공
                 //TODO: SharedPreference의 ID returnID로 변경
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData",getActivity().MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("USER_ID",returnId);
+                editor.commit();
                 //TODO: 어플 재시작
+                getActivity().finishAffinity();
             }
 
 
