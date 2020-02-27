@@ -1,5 +1,6 @@
 package com.example.hrhj.httpConnect;
 
+import com.example.hrhj.domain.DeviceCode;
 import com.example.hrhj.domain.Post.Post;
 import com.example.hrhj.domain.User;
 import com.google.gson.Gson;
@@ -94,6 +95,34 @@ public class HttpConnection {
                 .url(url+"/saveimage")
                 .post(requestBody)
                 .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public void createDeviceCode(int uid, Callback callback) {
+
+        Gson gson = new Gson();
+        String json = gson.toJson(uid);
+
+        Request request = new Request.Builder()
+                .url(url+"/createdevicecode")
+                .post(RequestBody.create(MediaType.parse("application/json"),json))
+                .build();
+
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public void changeDevice(DeviceCode deviceCode, Callback callback) {
+
+        Gson gson = new Gson();
+        String json = gson.toJson(deviceCode);
+
+        Request request = new Request.Builder()
+                .url(url+"/changedevice")
+                .post(RequestBody.create(MediaType.parse("application/json"),json))
+                .build();
+
 
         client.newCall(request).enqueue(callback);
     }

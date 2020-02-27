@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="30dp">
+
+        <Button
+            android:id="@+id/DCF_issueCode_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공유코드 발급" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="30dp">
+
+        <Button
+            android:id="@+id/DCF_deviceChange_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="계정공유" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
