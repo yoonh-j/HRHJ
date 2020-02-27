@@ -11,4 +11,9 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    public Post getPostInfo(int pid) {
+        return postRepository.findById(pid).orElse(new Post());
+    }
+
+
 }

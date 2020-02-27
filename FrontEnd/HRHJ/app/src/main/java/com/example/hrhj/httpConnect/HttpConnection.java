@@ -68,6 +68,20 @@ public class HttpConnection {
         client.newCall(request).enqueue(callback);
     }
 
+    public void updatePost(Post post, Callback callback) {
+
+        Gson gson = new Gson();
+        String json = gson.toJson(post);
+
+        Request request = new Request.Builder()
+                .url(url+"/updatepost")
+                .post(RequestBody.create(MediaType.parse("application/json"),json))
+                .build();
+
+
+        client.newCall(request).enqueue(callback);
+    }
+
     public void saveImage(File image, Callback callback) {
 
 

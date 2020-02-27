@@ -34,6 +34,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     private  ArrayList<Post> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private HttpConnection httpConn = HttpConnection.getInstance();
 
     public HomeRecyclerViewAdapter(ArrayList<Post> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -92,6 +93,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             public void onClick(View v) {
                 holder.postLayout.setVisibility(View.GONE);
                 holder.updateLayout.setVisibility(View.VISIBLE);
+                holder.updateText.setText(holder.mItem.getText());
             }
         });
 
@@ -106,6 +108,10 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 holder.postLayout.setVisibility(View.VISIBLE);
 
                 holder.uploadText.setText(holder.updateText.getText());
+                holder.mItem.setText(holder.updateText.getText().toString());
+
+                httpConn.updatePost(holder.mItem,updatePostListCallback);
+
 
             }
         });
@@ -114,7 +120,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpConnection httpConn = HttpConnection.getInstance();
+                //HttpConnection httpConn = HttpConnection.getInstance();
                 httpConn.deletePost(holder.mItem,deletePostListCallback);
                 mValues.remove(holder.mItem);
                 notifyDataSetChanged();
@@ -165,6 +171,16 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     }
 
     public final Callback deletePostListCallback = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+        }
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+
+        }
+    };
+
+    public final Callback updatePostListCallback = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
         }

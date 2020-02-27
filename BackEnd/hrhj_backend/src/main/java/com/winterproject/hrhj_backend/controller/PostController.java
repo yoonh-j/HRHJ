@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -47,6 +48,21 @@ public class PostController {
             image.delete();
         }
 
+    }
+
+    @PostMapping(path = "/updatepost")
+    public Post updatePost(@RequestBody Post post) {
+
+        User user = userService.getUserInfo(post.getUid());
+        Post originPost = postService.getPostInfo(post.getPid());
+
+        user.updatePost(originPost,post.getText());
+        
+        userService.saveUserInfo(user);
+
+
+
+        return post;
     }
 
     @PostMapping(path = "/saveimage")

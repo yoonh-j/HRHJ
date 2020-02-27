@@ -21,4 +21,8 @@ public class User {
 
     public void addPost(Post post) { this.postList.add(post); }
     public void deletePost(Post post) { this.postList.remove(post); }
+
+    public void updatePost(Post post, String newText){
+        this.postList.get(this.postList.indexOf(post)).setText(newText);
+    }
 }
