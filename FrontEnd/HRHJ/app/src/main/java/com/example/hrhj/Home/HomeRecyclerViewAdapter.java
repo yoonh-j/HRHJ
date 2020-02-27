@@ -1,5 +1,6 @@
 package com.example.hrhj.Home;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.hrhj.Home.HomeFragment.OnListFragmentInteractionListener;
 import com.example.hrhj.R;
+import com.example.hrhj.domain.Post.Color;
+import com.example.hrhj.domain.Post.Emotion;
 import com.example.hrhj.domain.Post.Post;
 import com.example.hrhj.httpConnect.HttpConnection;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -57,11 +60,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 .into(holder.uploadImage);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //holder.uploadImage.setImageResource(R.drawable.upload_image); // temp
-        holder.uploadMood.setImageResource(R.drawable.upload_mood_happy); // temp
-        holder.uploadText.setText(mValues.get(position).getText());
-        holder.uploadDate.setText(sdf.format(mValues.get(position).getDate()));
 
+        holder.uploadText.setText(holder.mItem.getText());
+        holder.uploadDate.setText(sdf.format(holder.mItem.getDate()));
+        holder.setMood(holder.mItem.getEmotion());
+        holder.setTextColor(holder.mItem.getTextColor());
 
 
 
@@ -167,6 +170,83 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         @Override
         public String toString() {
             return super.toString() + " '" + uploadText.getText() + "'";
+        }
+
+        public void setMood(int mood)
+        {
+            switch (mood)
+            {
+                case Emotion.EMOTION_HAPPY:
+                {
+                    uploadMood.setImageResource(R.drawable.happy);
+                    break;
+                }
+                case Emotion.EMOTION_GOOD:
+                {
+                    uploadMood.setImageResource(R.drawable.good);
+                    break;
+                }
+                case Emotion.EMOTION_SOSO:
+                {
+                    uploadMood.setImageResource(R.drawable.soso);
+                    break;
+                }
+                case Emotion.EMOTION_SAD:
+                {
+                    uploadMood.setImageResource(R.drawable.sad);
+                    break;
+                }
+                case Emotion.EMOTION_BAD:
+                {
+                    uploadMood.setImageResource(R.drawable.bad);
+                    break;
+                }
+            }
+        }
+
+        public void setTextColor(int color){
+            switch (color){
+
+                //TODO: Adapter생성시 Context 입력받아서 코드 간소화 가능(컬러 스트링부분)
+                case Color.WHITE:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#FFFFFF"));
+                    break;
+                }
+                case Color.RED:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#DDFF0000"));
+                    break;
+                }
+                case Color.ORANGE:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#FF5722"));
+                    break;
+                }
+                case Color.YELLOW:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#FFEB3B"));
+                    break;
+                }
+                case Color.GREEN:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#4CAF50"));
+                    break;
+                }
+                case Color.BLUE:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#3F51B5"));
+                    break;
+                }
+                case Color.PURPLE:
+                {
+                    uploadText.setTextColor(android.graphics.Color.parseColor("#9C27B0"));
+                    break;
+                }
+
+            }
+
+
         }
     }
 
