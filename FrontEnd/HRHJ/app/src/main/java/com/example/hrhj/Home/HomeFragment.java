@@ -106,10 +106,7 @@ public class HomeFragment extends Fragment {
                         recyclerView.scrollToPosition(getArguments().getInt("INDEX"));
                     }
                 }, 200);
-
-
             }
-
         }
 
         return view;
@@ -138,10 +135,6 @@ public class HomeFragment extends Fragment {
         void onListFragmentInteraction(Post item);
     }
 
-    public void scrollTo(int position)
-    {
-        recyclerView.scrollToPosition(position);
-    }
 
 
 

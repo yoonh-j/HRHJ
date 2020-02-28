@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     final int REQUEST_MULTIPLE_PERMISSIONS = 3;
 
     public static int USER_ID;
+    public static boolean isFromSearch = false;
+    public int homeIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.homeMenu: {
-                    replaceFragment(homeFragment);
+                    if(!isFromSearch)
+                    {
+                        replaceFragment(homeFragment);
+                    }
+                    else
+                    {
+                        replaceFragment(HomeFragment.newInstance(homeIndex));
+                        isFromSearch = false;
+                    }
+
                     break;
                 }
                 case R.id.searchMenu: {
@@ -198,11 +209,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
     }
 
     public void scrollToItem(Post post){
-        int index = postList.indexOf(post);
-        homeFragment.scrollTo(index);
-        //bottomNavigation.setSelectedItemId(R.id.homeMenu);
-        replaceFragment(HomeFragment.newInstance(index));
-        //TODO: OnItemSelectedListener때문에 네비바 변경 불가능
+        //int index = postList.indexOf(post);
+        homeIndex = postList.indexOf(post);
+        isFromSearch = true;
+        bottomNavigation.setSelectedItemId(R.id.homeMenu);
+        //replaceFragment(HomeFragment.newInstance(index));
 
     }
 
