@@ -16,4 +16,13 @@ public class Post {
     private int emotion;
     private int textColor;
 
+
+
+    @Override
+    public boolean equals(Object o){
+        return ( pid == ((Post)o).pid );
+    }
+
+
+
 }

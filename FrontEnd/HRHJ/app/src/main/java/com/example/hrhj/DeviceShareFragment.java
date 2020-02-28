@@ -32,7 +32,7 @@ public class DeviceShareFragment extends Fragment {
     }
 
     private Button issueCodeButton;
-    private Button deviceChangeButton;
+    private Button shareAccountButton;
     private HttpConnection httpConnection = HttpConnection.getInstance();
     private DeviceCode code;
 
@@ -43,7 +43,7 @@ public class DeviceShareFragment extends Fragment {
         final ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_devicechange, container, false);
 
         issueCodeButton = (Button)view.findViewById(R.id.DCF_issueCode_Button);
-        deviceChangeButton = (Button)view.findViewById(R.id.DCF_deviceChange_Button);
+        shareAccountButton = (Button)view.findViewById(R.id.DCF_shareAccount_Button);
 
         issueCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class DeviceShareFragment extends Fragment {
             }
         });
 
-        deviceChangeButton.setOnClickListener(new View.OnClickListener() {
+        shareAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -69,7 +69,7 @@ public class DeviceShareFragment extends Fragment {
                         DeviceCode inputCode = new DeviceCode();
                         inputCode.setUid(MainActivity.USER_ID);
                         inputCode.setCode(et.getText().toString());
-                        httpConnection.changeDevice(inputCode,changeDeviceCodeCallback);
+                        httpConnection.shareAccount(inputCode, shareAccountCodeCallback);
                     }
                 });
                 inputBuilder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
@@ -119,7 +119,7 @@ public class DeviceShareFragment extends Fragment {
         }
     };
 
-    public final Callback changeDeviceCodeCallback = new Callback() {
+    public final Callback shareAccountCodeCallback = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
         }

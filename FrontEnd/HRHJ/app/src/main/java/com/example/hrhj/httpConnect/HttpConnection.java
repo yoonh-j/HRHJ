@@ -2,6 +2,7 @@ package com.example.hrhj.httpConnect;
 
 import com.example.hrhj.domain.DeviceCode;
 import com.example.hrhj.domain.Post.Post;
+import com.example.hrhj.domain.SearchDTO;
 import com.example.hrhj.domain.User;
 import com.google.gson.Gson;
 
@@ -112,6 +113,20 @@ public class HttpConnection {
         client.newCall(request).enqueue(callback);
     }
 
+    public void searchPost(SearchDTO searchDTO, Callback callback) {
+
+        Gson gson = new Gson();
+        String json = gson.toJson(searchDTO);
+
+        Request request = new Request.Builder()
+                .url(url+"/searchpost")
+                .post(RequestBody.create(MediaType.parse("application/json"),json))
+                .build();
+
+
+        client.newCall(request).enqueue(callback);
+    }
+
     public void createDeviceCode(int uid, Callback callback) {
 
         Gson gson = new Gson();
@@ -126,7 +141,7 @@ public class HttpConnection {
         client.newCall(request).enqueue(callback);
     }
 
-    public void changeDevice(DeviceCode deviceCode, Callback callback) {
+    public void shareAccount(DeviceCode deviceCode, Callback callback) {
 
         Gson gson = new Gson();
         String json = gson.toJson(deviceCode);

@@ -3,6 +3,7 @@ package com.example.hrhj.Home;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hrhj.Home.HomeFragment.OnListFragmentInteractionListener;
+import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
 import com.example.hrhj.domain.Post.Color;
 import com.example.hrhj.domain.Post.Emotion;
@@ -38,10 +40,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     private  ArrayList<Post> mValues;
     private final OnListFragmentInteractionListener mListener;
     private HttpConnection httpConn = HttpConnection.getInstance();
+    private Context context;
 
-    public HomeRecyclerViewAdapter(ArrayList<Post> items, OnListFragmentInteractionListener listener) {
+    public HomeRecyclerViewAdapter(ArrayList<Post> items, OnListFragmentInteractionListener listener,Context context) {
         mValues = items;
         mListener = listener;
+        this.context = context;
     }
 
     @Override
@@ -126,6 +130,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 //HttpConnection httpConn = HttpConnection.getInstance();
                 httpConn.deletePost(holder.mItem,deletePostListCallback);
                 mValues.remove(holder.mItem);
+                //TODO: CallBack함수로 이동 필요
+                ((MainActivity)context).postList.remove(holder.mItem);
                 notifyDataSetChanged();
             }
         });

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.hrhj.MainActivity;
 import com.example.hrhj.R;
 import com.example.hrhj.domain.Post.Post;
 import com.example.hrhj.httpConnect.HttpConnection;
@@ -41,12 +42,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SearchViewHolder holder, final int position) {
 
         Glide.with(holder.itemView.getContext())
                 .load(HttpConnection.url+"/image/"+itemList.get(position).getImage())
                 .error(R.drawable.upload_image)
                 .into(holder.itemImage);
+
+        holder.itemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)context).scrollToItem(itemList.get(position));
+            }
+        });
     }
 
     @Override
@@ -62,5 +70,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             super(itemView);
             itemImage = (ImageView) itemView.findViewById(R.id.search_itemImage);
         }
+    }
+
+    public void setItemList(ArrayList<Post> itemList)
+    {
+        this.itemList = itemList;
     }
 }

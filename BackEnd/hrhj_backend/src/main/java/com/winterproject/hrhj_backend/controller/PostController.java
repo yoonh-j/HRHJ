@@ -1,14 +1,12 @@
 package com.winterproject.hrhj_backend.controller;
 
+import com.winterproject.hrhj_backend.domain.DTO.SearchDTO;
 import com.winterproject.hrhj_backend.domain.entity.Post;
 import com.winterproject.hrhj_backend.domain.entity.User;
 import com.winterproject.hrhj_backend.service.PostService;
 import com.winterproject.hrhj_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -77,6 +75,14 @@ public class PostController {
         {
             e.printStackTrace();
         }
+    }
+
+    @PostMapping(path = "/searchpost")
+    public List<Post> updatePost(@RequestBody SearchDTO searchDTO) {
+
+
+        return postService.searchPost(searchDTO.getUid(),searchDTO.getSearchText());
+
     }
 
 }
