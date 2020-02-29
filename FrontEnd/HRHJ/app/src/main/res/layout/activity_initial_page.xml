@@ -23,7 +23,9 @@
             android:id="@+id/IPA_Start_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="시작하기"/>
+            android:text="시작하기"
+            android:textColor="@color/colorActionBarMenu"
+            android:background="@color/colorPrimary"/>
     </LinearLayout>
 
     <View

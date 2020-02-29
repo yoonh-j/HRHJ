@@ -47,6 +47,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:hint="일기 작성"
             android:textColorHint="@color/colorGrayedOut"
+            android:textCursorDrawable="@color/colorPrimary"
             android:visibility="gone"/>
     </FrameLayout>
 

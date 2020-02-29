@@ -1,6 +1,7 @@
 package com.example.hrhj.Home;
 
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -52,6 +53,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_fragment_home, parent, false);
+
+        FrameLayout home_frameLayout = view.findViewById(R.id.home_frameLayout);
+        ViewGroup.LayoutParams params = home_frameLayout.getLayoutParams();
+        params.height = parent.getMeasuredWidth();
+        home_frameLayout.setLayoutParams(params);
+
         return new ViewHolder(view);
     }
 

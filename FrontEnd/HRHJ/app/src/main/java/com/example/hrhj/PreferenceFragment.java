@@ -50,7 +50,8 @@ public class PreferenceFragment extends PreferenceFragmentCompat  {
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frameLayout, fragment)
+                .add(R.id.frameLayout, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 

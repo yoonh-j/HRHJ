@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         bottomNavigation.setItemIconTintList(null);
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
@@ -151,7 +150,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(bottomNavigation.getSelectedItemId() == R.id.homeMenu) {
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -168,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         } else {
             //bottomNavigation.setVisibility(View.GONE);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frameLayout, addFragment).addToBackStack(null).commit();
+            transaction.add(R.id.frameLayout, addFragment).addToBackStack(null).commit();
         }
     }
 
@@ -179,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnLi
         if(Build.VERSION.SDK_INT >= 23) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayout, addFragment).addToBackStack(null).commit();
+                transaction.add(R.id.frameLayout, addFragment).addToBackStack(null).commit();
             }
         }
     }

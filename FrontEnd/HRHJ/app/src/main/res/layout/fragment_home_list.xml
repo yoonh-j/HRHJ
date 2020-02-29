@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@+id/bottomNavigation"
+    android:background="@color/colorPrimary"
     app:layoutManager="LinearLayoutManager"
     tools:context=".Home.HomeFragment"
     tools:listitem="@layout/item_fragment_home" />
